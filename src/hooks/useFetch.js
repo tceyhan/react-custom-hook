@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 
 function useFetch(url, initialdata = []) {
+  
   const [data, setData] = useState(initialdata);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -14,6 +15,7 @@ function useFetch(url, initialdata = []) {
         if (!response.ok) {
           setError("Something went wrong!");
           setLoading(false);
+          setData([]);
         }else{
         return response.json();
         }
@@ -21,8 +23,10 @@ function useFetch(url, initialdata = []) {
       .then((data) => {
         setData(data);
         setLoading(false);
+        setError("");
       });
   }, [url]);
+
   return { data, loading, error };
 }
 export default useFetch;
